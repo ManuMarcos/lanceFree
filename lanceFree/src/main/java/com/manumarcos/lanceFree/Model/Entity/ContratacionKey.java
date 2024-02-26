@@ -1,6 +1,7 @@
 package com.manumarcos.lanceFree.Model.Entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;
 

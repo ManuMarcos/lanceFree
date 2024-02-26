@@ -1,6 +1,7 @@
 package com.manumarcos.lanceFree.Model.Entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
 import java.util.List;
 
