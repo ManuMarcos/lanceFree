@@ -33,18 +33,21 @@ public class ServicioDaoImpl implements IServicioDao {
     }
 
     @Override
+    @Transactional
     public Servicio save(Servicio servicio) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.merge(servicio);
     }
 
     @Override
+    @Transactional
     public Servicio update(Servicio servicio) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.merge(servicio);
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
         Servicio servicioToDelete = currentSession.get(Servicio.class, id);

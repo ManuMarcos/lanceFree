@@ -33,18 +33,21 @@ public class ProveedorDaoImpl implements IProveedorDao{
     }
 
     @Override
+    @Transactional
     public Proveedor save(Proveedor proveedor) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.merge(proveedor);
     }
 
     @Override
+    @Transactional
     public Proveedor update(Proveedor proveedor) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.merge(proveedor);
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
         Proveedor proveedorToDelete = currentSession.get(Proveedor.class, id);

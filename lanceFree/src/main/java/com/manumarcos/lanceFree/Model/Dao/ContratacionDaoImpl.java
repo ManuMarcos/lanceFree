@@ -33,18 +33,21 @@ public class ContratacionDaoImpl implements IContratacionDao{
     }
 
     @Override
+    @Transactional
     public Contratacion save(Contratacion contratacion) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.merge(contratacion);
     }
 
     @Override
+    @Transactional
     public Contratacion update(Contratacion contratacion) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.merge(contratacion);
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
 

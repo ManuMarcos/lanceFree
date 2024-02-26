@@ -34,18 +34,21 @@ public class ComentarioDaoImpl implements IComentarioDao{
     }
 
     @Override
+    @Transactional
     public Comentario save(Comentario comentario) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.merge(comentario);
     }
 
     @Override
+    @Transactional
     public Comentario update(Comentario comentario) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.merge(comentario);
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
 

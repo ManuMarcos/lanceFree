@@ -1,30 +1,16 @@
-package com.manumarcos.lanceFree.Model.Entity;
+package com.manumarcos.lanceFree.Service.Dto;
 
-import jakarta.persistence.*;
+import com.manumarcos.lanceFree.Model.Entity.Usuario;
 
-@MappedSuperclass
-public abstract class Usuario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public abstract class UsuarioDto {
+
     private Long id;
-
     private String nombre;
     private String apellido;
-    @Column(unique = true)
     private String email;
     private String telefono;
-    private String contrasena;
 
-    public Usuario(Long id, String nombre, String apellido, String email, String telefono, String contrasena) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.telefono = telefono;
-        this.contrasena = contrasena;
-    }
-
-    public Usuario(Long id, String nombre, String apellido, String email, String telefono) {
+    public UsuarioDto(Long id, String nombre, String apellido, String email, String telefono) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -32,8 +18,12 @@ public abstract class Usuario {
         this.telefono = telefono;
     }
 
-    public Usuario() {
-
+    public UsuarioDto(Usuario usuario){
+        this.id = usuario.getId();
+        this.nombre = usuario.getNombre();
+        this.apellido = usuario.getApellido();
+        this.email = usuario.getEmail();
+        this.telefono = usuario.getTelefono();
     }
 
     public Long getId() {
@@ -74,13 +64,5 @@ public abstract class Usuario {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
     }
 }

@@ -36,18 +36,21 @@ public class CategoriaDaoImpl implements ICategoriaDao{
     }
 
     @Override
+    @Transactional
     public Categoria save(Categoria categoria) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.merge(categoria);
     }
 
     @Override
+    @Transactional
     public Categoria update(Categoria categoria) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.merge(categoria);
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
 

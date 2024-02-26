@@ -36,18 +36,21 @@ public class ClienteDaoImpl implements IClienteDao{
     }
 
     @Override
+    @Transactional
     public Cliente save(Cliente cliente) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.merge(cliente);
     }
 
     @Override
+    @Transactional
     public Cliente update(Cliente cliente) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.merge(cliente);
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
 

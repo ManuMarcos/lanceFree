@@ -1,15 +1,16 @@
 package com.manumarcos.lanceFree.Service;
 
 import com.manumarcos.lanceFree.Model.Entity.Cliente;
+import com.manumarcos.lanceFree.Service.Dto.ClienteDto;
 
 import java.util.List;
 
 public interface IClienteService {
 
-    List<Cliente> findAll();
-    Cliente findById(Long id);
-    Cliente save(Cliente cliente);
-    Cliente update(Long id,Cliente cliente);
+    List<ClienteDto> findAll();
+    ClienteDto findById(Long id);
+    ClienteDto save(ClienteDto clienteDto);
+    ClienteDto update(Long id,ClienteDto clienteDto);
     void deleteById(Long id);
 
 }

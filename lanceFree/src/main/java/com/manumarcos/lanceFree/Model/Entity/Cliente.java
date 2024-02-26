@@ -23,6 +23,15 @@ public class Cliente extends Usuario{
         this.comentarios = comentarios;
     }
 
+    public Cliente(Long id, String nombre, String apellido, String email, String telefono, String horarioContacto) {
+        super(id, nombre, apellido, email, telefono);
+        this.horarioContacto = horarioContacto;
+    }
+
+    public Cliente() {
+        super();
+    }
+
     public String getHorarioContacto() {
         return horarioContacto;
     }

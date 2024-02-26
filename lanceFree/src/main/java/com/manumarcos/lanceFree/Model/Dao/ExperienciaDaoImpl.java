@@ -31,18 +31,21 @@ public class ExperienciaDaoImpl implements IExperienciaDao{
     }
 
     @Override
+    @Transactional
     public Experiencia save(Experiencia experiencia) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.merge(experiencia);
     }
 
     @Override
+    @Transactional
     public Experiencia update(Experiencia experiencia) {
         Session currentSession = entityManager.unwrap(Session.class);
         return currentSession.merge(experiencia);
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
         Experiencia experienciaToDelete = currentSession.get(Experiencia.class, id);
