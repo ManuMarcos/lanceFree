@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface ICategoriaService {
 
     List<Categoria> findAll();
-    Optional<Categoria> findById(Long id);
+    Categoria findById(Long id);
     Categoria save(Categoria categoria);
-    Categoria update(Categoria categoria);
+    Categoria update(Long id, Categoria categoria);
     void deleteById(Long id);
 
 

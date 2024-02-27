@@ -19,5 +19,52 @@ public class Contratacion {
     @JoinColumn(name = "servicio_id")
     private Servicio servicio;
 
+    public Contratacion(ContratacionKey id, EstadoContratacion estado, String motivo, Cliente cliente, Servicio servicio) {
+        this.id = id;
+        this.estado = estado;
+        this.motivo = motivo;
+        this.cliente = cliente;
+        this.servicio = servicio;
+    }
 
+    public ContratacionKey getId() {
+        return id;
+    }
+
+    public void setId(ContratacionKey id) {
+        this.id = id;
+    }
+
+    public EstadoContratacion getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoContratacion estado) {
+        this.estado = estado;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Servicio getServicio() {
+        return servicio;
+    }
+
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
+    }
 }
+

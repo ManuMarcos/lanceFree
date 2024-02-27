@@ -1,5 +1,6 @@
 package com.manumarcos.lanceFree.Service;
 
+import com.manumarcos.lanceFree.Exception.Exceptions.ItemNotFoundException;
 import com.manumarcos.lanceFree.Model.Dao.ICategoriaDao;
 import com.manumarcos.lanceFree.Model.Entity.Categoria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,26 +18,37 @@ public class CategoriaServiceImpl implements ICategoriaService{
 
     @Override
     public List<Categoria> findAll() {
-        return null;
+        return categoriaDao.findAll();
     }
 
     @Override
-    public Optional<Categoria> findById(Long id) {
-        return Optional.empty();
+    public Categoria findById(Long id) {
+        return categoriaDao.findById(id).orElseThrow(() -> new ItemNotFoundException(String.format("La categoria con id: %d no existe", id)));
     }
 
     @Override
     public Categoria save(Categoria categoria) {
-        return null;
+        return categoriaDao.save(categoria);
     }
 
     @Override
-    public Categoria update(Categoria categoria) {
-        return null;
+    public Categoria update(Long id, Categoria categoria) {
+        Categoria categoriaToUpdate = findById(id);
+
+        categoriaToUpdate.setNombre(categoria.getNombre());
+
+        return categoriaDao.update(categoria);
     }
 
     @Override
     public void deleteById(Long id) {
-
+        if(categoriaDao.findById(id).isPresent()){
+            categoriaDao.deleteById(id);
+        }
+        else{
+            throw new ItemNotFoundException(String.format("La categoria con id: %d no existe", id));
+        }
     }
+
+
 }

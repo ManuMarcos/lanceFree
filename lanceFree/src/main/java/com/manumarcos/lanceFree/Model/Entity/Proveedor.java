@@ -16,5 +16,34 @@ public class Proveedor extends Usuario{
     @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Servicio> servicios;
 
+    public Proveedor(Long id, String nombre, String apellido, String email, String telefono, String contrasena, String titulo, List<Experiencia> experiencias, List<Servicio> servicios) {
+        super(id, nombre, apellido, email, telefono, contrasena);
+        this.titulo = titulo;
+        this.experiencias = experiencias;
+        this.servicios = servicios;
+    }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public List<Experiencia> getExperiencias() {
+        return experiencias;
+    }
+
+    public void setExperiencias(List<Experiencia> experiencias) {
+        this.experiencias = experiencias;
+    }
+
+    public List<Servicio> getServicios() {
+        return servicios;
+    }
+
+    public void setServicios(List<Servicio> servicios) {
+        this.servicios = servicios;
+    }
 }
