@@ -13,4 +13,13 @@ public class ComentarioKey implements Serializable {
 
     @Column(name = "cliente_id")
     private Long clienteId;
+
+    public ComentarioKey(Long servicioId, Long clienteId) {
+        this.servicioId = servicioId;
+        this.clienteId = clienteId;
+    }
+
+    public ComentarioKey() {
+
+    }
 }

@@ -33,6 +33,10 @@ public class Comentario {
         this.servicio = servicio;
     }
 
+    public Comentario() {
+
+    }
+
     public ComentarioKey getId() {
         return id;
     }

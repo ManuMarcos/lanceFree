@@ -1,14 +1,14 @@
 package com.manumarcos.lanceFree.Service;
 
-import com.manumarcos.lanceFree.Model.Entity.Comentario;
+import com.manumarcos.lanceFree.Service.Dto.ComentarioDto;
 
 import java.util.List;
 
 public interface IComentarioService {
 
-    List<Comentario> findAll();
-    Comentario findById(Long id);
-    Comentario save(Comentario comentario);
-    Comentario update(Long id, Comentario comentario);
-    void deleteById(Long id);
+    List<ComentarioDto> findAll();
+    ComentarioDto findById(Long clienteId, Long servicioId);
+    ComentarioDto save(ComentarioDto comentarioDto);
+    ComentarioDto update(Long clienteId, Long servicioId, ComentarioDto comentarioDto);
+    void deleteById(Long clienteId, Long servicioId);
 }

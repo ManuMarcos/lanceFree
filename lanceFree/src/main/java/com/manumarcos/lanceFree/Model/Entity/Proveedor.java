@@ -23,6 +23,10 @@ public class Proveedor extends Usuario{
         this.servicios = servicios;
     }
 
+    public Proveedor() {
+
+    }
+
     public String getTitulo() {
         return titulo;
     }
