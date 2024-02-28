@@ -14,9 +14,8 @@ public class Servicio {
     private String nombre;
     private String descripcion;
     private float duracion;
-
     private float precio;
-
+    @Enumerated(EnumType.STRING)
     private Frecuencia frecuencia;
 
     @OneToMany(mappedBy = "servicio")
@@ -44,6 +43,16 @@ public class Servicio {
         this.frecuencia = frecuencia;
         this.contrataciones = contrataciones;
         this.comentarios = comentarios;
+        this.proveedor = proveedor;
+        this.categoria = categoria;
+    }
+
+    public Servicio(String nombre, String descripcion, float duracion, float precio, Frecuencia frecuencia, Proveedor proveedor, Categoria categoria) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.duracion = duracion;
+        this.precio = precio;
+        this.frecuencia = frecuencia;
         this.proveedor = proveedor;
         this.categoria = categoria;
     }

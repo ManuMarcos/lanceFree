@@ -23,6 +23,11 @@ public class Proveedor extends Usuario{
         this.servicios = servicios;
     }
 
+    public Proveedor(String nombre, String apellido, String email, String telefono, String titulo) {
+        super(nombre, apellido, email, telefono);
+        this.titulo = titulo;
+    }
+
     public Proveedor() {
 
     }

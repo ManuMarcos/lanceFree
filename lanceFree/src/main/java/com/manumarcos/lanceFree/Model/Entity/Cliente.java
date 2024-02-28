@@ -28,6 +28,16 @@ public class Cliente extends Usuario{
         this.horarioContacto = horarioContacto;
     }
 
+    public Cliente(String nombre, String apellido, String email, String telefono, String contrasena, String horarioContacto) {
+        super(nombre, apellido, email, telefono, contrasena);
+        this.horarioContacto = horarioContacto;
+    }
+
+    public Cliente(String nombre, String apellido, String email, String telefono, String horarioContacto) {
+        super(nombre, apellido, email, telefono);
+        this.horarioContacto = horarioContacto;
+    }
+
     public Cliente() {
         super();
     }

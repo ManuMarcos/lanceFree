@@ -34,7 +34,7 @@ public class ClienteServiceImpl implements IClienteService{
 
     @Override
     public ClienteDto save(ClienteDto clienteDto) {
-        Cliente cliente = new Cliente(clienteDto.getId(), clienteDto.getNombre(), clienteDto.getApellido(),
+        Cliente cliente = new Cliente(clienteDto.getNombre(), clienteDto.getApellido(),
                 clienteDto.getEmail(), clienteDto.getTelefono(), clienteDto.getHorarioContacto());
         return new ClienteDto(clienteDao.save(cliente));
     }

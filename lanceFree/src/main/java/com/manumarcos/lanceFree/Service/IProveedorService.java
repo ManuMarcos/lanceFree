@@ -1,14 +1,15 @@
 package com.manumarcos.lanceFree.Service;
 
 import com.manumarcos.lanceFree.Model.Entity.Proveedor;
+import com.manumarcos.lanceFree.Service.Dto.ProveedorDto;
 
 import java.util.List;
 
 public interface IProveedorService {
 
-    List<Proveedor> findAll();
-    Proveedor findById(Long id);
-    Proveedor save(Proveedor proveedor);
-    Proveedor update(Long id, Proveedor proveedor);
+    List<ProveedorDto> findAll();
+    ProveedorDto findById(Long id);
+    ProveedorDto save(ProveedorDto proveedorDto);
+    ProveedorDto update(Long id, ProveedorDto proveedorDto);
     void deleteById(Long id);
 }

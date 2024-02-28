@@ -36,6 +36,21 @@ public abstract class Usuario {
 
     }
 
+    public Usuario(String nombre, String apellido, String email, String telefono, String contrasena) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.telefono = telefono;
+        this.contrasena = contrasena;
+    }
+
+    public Usuario(String nombre, String apellido, String email, String telefono) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.telefono = telefono;
+    }
+
     public Long getId() {
         return id;
     }
