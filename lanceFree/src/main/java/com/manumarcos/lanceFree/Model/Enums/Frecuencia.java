@@ -15,7 +15,8 @@ public enum Frecuencia {
             }
         }
         if(result == null){
-            throw new ItemNotFoundException(String.format("La frecuencia con valor: %d no existe", name));
+            String mensaje = "La frecuencia con valor: " + name + " no existe";
+            throw new ItemNotFoundException(mensaje);
         }
         return result;
     }

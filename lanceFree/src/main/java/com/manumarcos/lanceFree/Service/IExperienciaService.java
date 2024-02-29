@@ -1,14 +1,15 @@
 package com.manumarcos.lanceFree.Service;
 
 import com.manumarcos.lanceFree.Model.Entity.Experiencia;
+import com.manumarcos.lanceFree.Service.Dto.ExperienciaDto;
 
 import java.util.List;
 
 public interface IExperienciaService {
 
-    List<Experiencia> findAll();
-    Experiencia findById(Long id);
-    Experiencia save(Experiencia experiencia);
-    Experiencia update(Long id, Experiencia experiencia);
+    List<ExperienciaDto> findAll();
+    ExperienciaDto findById(Long id);
+    ExperienciaDto save(ExperienciaDto experienciaDto);
+    ExperienciaDto update(Long id, ExperienciaDto experienciaDto);
     void deleteById(Long id);
 }

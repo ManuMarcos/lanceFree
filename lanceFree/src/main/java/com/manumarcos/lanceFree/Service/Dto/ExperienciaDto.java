@@ -1,43 +1,34 @@
-package com.manumarcos.lanceFree.Model.Entity;
+package com.manumarcos.lanceFree.Service.Dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
+import com.manumarcos.lanceFree.Model.Entity.Experiencia;
 
 import java.util.Date;
 
-@Entity(name = "experiencia")
-public class Experiencia {
+public class ExperienciaDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date fechaDesde;
-
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date fechaHasta;
     private String descripcion;
+    private Long proveedorId;
 
-    @ManyToOne
-    @JoinColumn(name = "proveedor_id")
-    private Proveedor proveedor;
-
-    public Experiencia(Long id, Proveedor proveedor, Date fechaDesde, Date fechaHasta, String descripcion) {
+    public ExperienciaDto(Long id, Date fechaDesde, Date fechaHasta, String descripcion, Long proveedorId) {
         this.id = id;
-        this.proveedor = proveedor;
         this.fechaDesde = fechaDesde;
         this.fechaHasta = fechaHasta;
         this.descripcion = descripcion;
+        this.proveedorId = proveedorId;
     }
 
-    public Experiencia(Date fechaDesde, Date fechaHasta, String descripcion, Proveedor proveedor) {
-        this.fechaDesde = fechaDesde;
-        this.fechaHasta = fechaHasta;
-        this.descripcion = descripcion;
-        this.proveedor = proveedor;
-    }
-
-    public Experiencia() {
-
+    public ExperienciaDto(Experiencia experiencia){
+        this.id = experiencia.getId();
+        this.fechaDesde = experiencia.getFechaDesde();
+        this.fechaHasta = experiencia.getFechaHasta();
+        this.descripcion = experiencia.getDescripcion();
+        this.proveedorId = experiencia.getProveedor().getId();
     }
 
     public Long getId() {
@@ -46,14 +37,6 @@ public class Experiencia {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
     }
 
     public Date getFechaDesde() {
@@ -78,5 +61,13 @@ public class Experiencia {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Long getProveedorId() {
+        return proveedorId;
+    }
+
+    public void setProveedorId(Long proveedorId) {
+        this.proveedorId = proveedorId;
     }
 }

@@ -1,7 +1,7 @@
 package com.manumarcos.lanceFree.Exception;
 
+import com.manumarcos.lanceFree.Exception.Exceptions.InvalidValueException;
 import com.manumarcos.lanceFree.Exception.Exceptions.ItemNotFoundException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,5 +22,9 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(InvalidValueException.class)
+    public ResponseEntity<String> handleInvalidValueException(Exception e){
+        return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 
 }

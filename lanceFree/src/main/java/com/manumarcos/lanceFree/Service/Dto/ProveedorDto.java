@@ -12,6 +12,8 @@ public class ProveedorDto extends UsuarioDto{
         this.titulo = titulo;
     }
 
+
+
     public ProveedorDto(Proveedor proveedor) {
         super(proveedor);
         this.titulo = proveedor.getTitulo();

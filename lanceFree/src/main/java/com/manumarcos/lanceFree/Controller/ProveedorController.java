@@ -27,7 +27,7 @@ public class ProveedorController {
     }
 
     @PostMapping
-    public ResponseEntity<ProveedorDto> newProveedor(ProveedorDto proveedorDto){
+    public ResponseEntity<ProveedorDto> newProveedor(@RequestBody ProveedorDto proveedorDto){
         return new ResponseEntity<>(proveedorService.save(proveedorDto), HttpStatus.CREATED);
     }
 

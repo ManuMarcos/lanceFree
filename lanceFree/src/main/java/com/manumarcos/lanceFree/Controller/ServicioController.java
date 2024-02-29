@@ -39,7 +39,7 @@ public class ServicioController {
     @DeleteMapping("/{servicioId}")
     public ResponseEntity<String> deleteServicio(@PathVariable Long servicioId){
         servicioService.deleteById(servicioId);
-        String mensaje = String.format("Servicio con id: %d eliminado correctamente");
+        String mensaje = String.format("Servicio con id: %d eliminado correctamente", servicioId);
         return ResponseEntity.ok(mensaje);
     }
 
