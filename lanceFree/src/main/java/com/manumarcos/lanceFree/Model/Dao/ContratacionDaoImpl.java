@@ -1,6 +1,7 @@
 package com.manumarcos.lanceFree.Model.Dao;
 
 import com.manumarcos.lanceFree.Model.Entity.Contratacion;
+import com.manumarcos.lanceFree.Model.Entity.ContratacionKey;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
@@ -27,7 +28,7 @@ public class ContratacionDaoImpl implements IContratacionDao{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Contratacion> findById(Long id) {
+    public Optional<Contratacion> findById(ContratacionKey id) {
         Session currentSession = entityManager.unwrap(Session.class);
         return Optional.ofNullable(currentSession.get(Contratacion.class, id));
     }
@@ -48,7 +49,7 @@ public class ContratacionDaoImpl implements IContratacionDao{
 
     @Override
     @Transactional
-    public void deleteById(Long id) {
+    public void deleteById(ContratacionKey id) {
         Session currentSession = entityManager.unwrap(Session.class);
 
         Contratacion contratacionToDelete = currentSession.get(Contratacion.class, id);

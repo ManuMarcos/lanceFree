@@ -2,11 +2,13 @@ package com.manumarcos.lanceFree.Model.Entity;
 
 import com.manumarcos.lanceFree.Model.Enums.EstadoContratacion;
 import jakarta.persistence.*;
+import org.jetbrains.annotations.NotNull;
 
 @Entity(name = "contratacion")
 public class Contratacion {
     @EmbeddedId
     private ContratacionKey id;
+    @Enumerated(EnumType.STRING)
     private EstadoContratacion estado;
     private String motivo;
     @ManyToOne
@@ -25,6 +27,18 @@ public class Contratacion {
         this.motivo = motivo;
         this.cliente = cliente;
         this.servicio = servicio;
+    }
+
+    public Contratacion(EstadoContratacion estado, String motivo, @NotNull Cliente cliente, @NotNull Servicio servicio) {
+        this.id = new ContratacionKey(cliente.getId(), servicio.getId());
+        this.estado = estado;
+        this.motivo = motivo;
+        this.cliente = cliente;
+        this.servicio = servicio;
+    }
+
+    public Contratacion() {
+
     }
 
     public ContratacionKey getId() {

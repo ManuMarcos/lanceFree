@@ -67,8 +67,9 @@ public class ComentarioServiceImpl implements IComentarioService{
 
     @Override
     public void deleteById(Long clienteId, Long servicioId) {
-        this.getComentario(clienteId,servicioId);
-        comentarioDao.deleteById(new ComentarioKey(clienteId, servicioId));
+        if(this.getComentario(clienteId,servicioId) != null){
+            comentarioDao.deleteById(new ComentarioKey(clienteId, servicioId));
+        }
     }
 
     private Comentario getComentario(Long clienteId, Long servicioId){

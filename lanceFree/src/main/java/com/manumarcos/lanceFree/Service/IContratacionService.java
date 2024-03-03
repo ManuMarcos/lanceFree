@@ -1,14 +1,15 @@
 package com.manumarcos.lanceFree.Service;
 
 import com.manumarcos.lanceFree.Model.Entity.Contratacion;
+import com.manumarcos.lanceFree.Service.Dto.ContratacionDto;
 
 import java.util.List;
 
 public interface IContratacionService {
 
-    List<Contratacion> findAll();
-    Contratacion findById(Long id);
-    Contratacion save(Contratacion contratacion);
-    Contratacion update(Long id, Contratacion contratacion);
-    void deleteById(Long id);
+    List<ContratacionDto> findAll();
+    ContratacionDto findById(Long clienteId, Long servicioId);
+    ContratacionDto save(ContratacionDto contratacionDto);
+    ContratacionDto update(Long clienteId, Long servicioId, ContratacionDto contratacionDto);
+    void deleteById(Long clienteId, Long servicioId);
 }
