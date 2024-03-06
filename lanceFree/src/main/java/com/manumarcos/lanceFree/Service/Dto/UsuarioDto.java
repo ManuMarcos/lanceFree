@@ -10,6 +10,17 @@ public abstract class UsuarioDto {
     private String email;
     private String telefono;
 
+    private String contrasena;
+
+    public UsuarioDto(Long id, String nombre, String apellido, String email, String telefono, String contrasena) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.telefono = telefono;
+        this.contrasena = contrasena;
+    }
+
     public UsuarioDto(Long id, String nombre, String apellido, String email, String telefono) {
         this.id = id;
         this.nombre = nombre;
@@ -18,12 +29,28 @@ public abstract class UsuarioDto {
         this.telefono = telefono;
     }
 
+    public UsuarioDto(String nombre, String apellido, String email, String telefono, String contrasena) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.telefono = telefono;
+        this.contrasena = contrasena;
+    }
+
     public UsuarioDto(Usuario usuario){
         this.id = usuario.getId();
         this.nombre = usuario.getNombre();
         this.apellido = usuario.getApellido();
         this.email = usuario.getEmail();
         this.telefono = usuario.getTelefono();
+        this.contrasena = usuario.getContrasena();
+    }
+
+    public UsuarioDto(String nombre, String apellido, String email, String contrasena) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.contrasena = contrasena;
     }
 
     public Long getId() {

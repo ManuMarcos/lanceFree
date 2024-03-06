@@ -38,6 +38,8 @@ public class Cliente extends Usuario{
         this.horarioContacto = horarioContacto;
     }
 
+
+
     public Cliente() {
         super();
     }

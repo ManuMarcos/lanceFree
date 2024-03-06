@@ -33,8 +33,9 @@ public abstract class Usuario {
     }
 
     public Usuario() {
-
     }
+
+
 
     public Usuario(String nombre, String apellido, String email, String telefono, String contrasena) {
         this.nombre = nombre;
@@ -50,6 +51,7 @@ public abstract class Usuario {
         this.email = email;
         this.telefono = telefono;
     }
+
 
     public Long getId() {
         return id;

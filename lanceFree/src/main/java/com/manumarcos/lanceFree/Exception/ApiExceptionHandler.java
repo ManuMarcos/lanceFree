@@ -1,5 +1,6 @@
 package com.manumarcos.lanceFree.Exception;
 
+import com.manumarcos.lanceFree.Exception.Exceptions.DuplicateException;
 import com.manumarcos.lanceFree.Exception.Exceptions.InvalidValueException;
 import com.manumarcos.lanceFree.Exception.Exceptions.ItemNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,11 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(InvalidValueException.class)
     public ResponseEntity<String> handleInvalidValueException(Exception e){
+        return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DuplicateException.class)
+    public ResponseEntity<String> handleDuplicateException(Exception e){
         return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 

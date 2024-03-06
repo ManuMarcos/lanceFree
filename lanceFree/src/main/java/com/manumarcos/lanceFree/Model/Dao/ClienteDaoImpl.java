@@ -17,6 +17,8 @@ public class ClienteDaoImpl implements IClienteDao{
     @PersistenceContext
     private EntityManager entityManager;
 
+    private static final String FIND_BY_EMAIL = "SELECT * FROM cliente WHERE email = :email";
+
 
     @Override
     @Transactional(readOnly = true)
@@ -33,6 +35,13 @@ public class ClienteDaoImpl implements IClienteDao{
     public Optional<Cliente> findById(Long id) {
         Session currentSession = entityManager.unwrap(Session.class);
         return Optional.ofNullable(currentSession.get(Cliente.class, id));
+    }
+
+    @Override
+    public Optional<Cliente> findByEmail(String email) {
+        return Optional.ofNullable(entityManager
+                .createQuery(FIND_BY_EMAIL)
+                .setParameter("email", email).unwrap(Cliente.class));
     }
 
     @Override

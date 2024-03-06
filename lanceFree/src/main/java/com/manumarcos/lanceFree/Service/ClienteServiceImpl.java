@@ -1,20 +1,27 @@
 package com.manumarcos.lanceFree.Service;
 
+import com.manumarcos.lanceFree.Exception.Exceptions.DuplicateException;
 import com.manumarcos.lanceFree.Exception.Exceptions.ItemNotFoundException;
 import com.manumarcos.lanceFree.Model.Dao.IClienteDao;
 import com.manumarcos.lanceFree.Model.Entity.Cliente;
 import com.manumarcos.lanceFree.Service.Dto.ClienteDto;
+import com.manumarcos.lanceFree.Service.Dto.SignUpRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClienteServiceImpl implements IClienteService{
 
     @Autowired
     private IClienteDao clienteDao;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<ClienteDto> findAll() {
@@ -64,4 +71,23 @@ public class ClienteServiceImpl implements IClienteService{
             throw new ItemNotFoundException(String.format("El cliente con id %d no existe",id));
         }
     }
+
+    @Override
+    public ClienteDto signUp(SignUpRequestDto signUpRequestDto) {
+        String email = signUpRequestDto.email();
+        Optional<Cliente> existeCliente = clienteDao.findByEmail(email);
+        if(existeCliente.isPresent()){
+            throw new DuplicateException(String.format("Ya existe un usuario con el email %s", email));
+        }
+        String hashedPassword = passwordEncoder.encode(signUpRequestDto.password());
+        System.out.println(hashedPassword);
+        Cliente cliente = new Cliente(signUpRequestDto.nombre(),signUpRequestDto.apellido(),
+                signUpRequestDto.email(), null, hashedPassword, null);
+        return new ClienteDto(clienteDao.save(cliente));
+    }
+
+    private Cliente findByEmail(String email){
+        return clienteDao.findByEmail(email).orElseThrow(() -> new ItemNotFoundException("El cliente con email:" +  email + " no existe"));
+    }
+
 }

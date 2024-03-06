@@ -9,8 +9,10 @@ public interface IClienteDao {
 
     List<Cliente> findAll();
     Optional<Cliente> findById(Long id);
+    Optional<Cliente> findByEmail(String email);
     Cliente save(Cliente cliente);
     Cliente update(Cliente cliente);
     void deleteById(Long id);
+
 
 }
