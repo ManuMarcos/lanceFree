@@ -26,10 +26,10 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.findById(clienteId));
     }
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<ClienteDto> newCliente(@RequestBody ClienteDto clienteDto){
-        return new ResponseEntity<>(clienteService.save(clienteDto), HttpStatus.CREATED);
-    }
+        return new ResponseEntity<>(clienteService.(clienteDto), HttpStatus.CREATED);
+    }*/
 
     @PutMapping("/{clienteId}")
     public ResponseEntity<ClienteDto> updateCliente(@PathVariable Long clienteId, @RequestBody ClienteDto clienteDto){

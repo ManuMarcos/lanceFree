@@ -10,8 +10,7 @@ public interface IClienteService {
 
     List<ClienteDto> findAll();
     ClienteDto findById(Long id);
-    ClienteDto save(ClienteDto clienteDto);
+    ClienteDto save(SignUpRequestDto signUpRequestDto);
     ClienteDto update(Long id,ClienteDto clienteDto);
     void deleteById(Long id);
-    ClienteDto signUp(SignUpRequestDto signUpRequestDto);
 }

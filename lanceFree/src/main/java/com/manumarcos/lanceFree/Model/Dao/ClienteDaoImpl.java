@@ -3,11 +3,13 @@ package com.manumarcos.lanceFree.Model.Dao;
 import com.manumarcos.lanceFree.Model.Entity.Cliente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +19,7 @@ public class ClienteDaoImpl implements IClienteDao{
     @PersistenceContext
     private EntityManager entityManager;
 
-    private static final String FIND_BY_EMAIL = "SELECT * FROM cliente WHERE email = :email";
+    private static final String FIND_BY_EMAIL = "SELECT c FROM cliente c  WHERE c.email = :email";
 
 
     @Override
@@ -39,9 +41,13 @@ public class ClienteDaoImpl implements IClienteDao{
 
     @Override
     public Optional<Cliente> findByEmail(String email) {
-        return Optional.ofNullable(entityManager
-                .createQuery(FIND_BY_EMAIL)
-                .setParameter("email", email).unwrap(Cliente.class));
+        TypedQuery<Cliente> typedQuery = entityManager.createQuery(FIND_BY_EMAIL, Cliente.class);
+        typedQuery.setParameter("email", email);
+        try {
+            return Optional.of(typedQuery.getSingleResult());
+        }catch (Exception e){
+            return Optional.empty();
+        }
     }
 
     @Override

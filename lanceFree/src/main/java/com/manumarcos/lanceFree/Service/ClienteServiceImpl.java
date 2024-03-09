@@ -40,13 +40,6 @@ public class ClienteServiceImpl implements IClienteService{
     }
 
     @Override
-    public ClienteDto save(ClienteDto clienteDto) {
-        Cliente cliente = new Cliente(clienteDto.getNombre(), clienteDto.getApellido(),
-                clienteDto.getEmail(), clienteDto.getTelefono(), clienteDto.getHorarioContacto());
-        return new ClienteDto(clienteDao.save(cliente));
-    }
-
-    @Override
     public ClienteDto update(Long id, ClienteDto clienteDto) {
         try{
             Cliente clienteToUpdate = clienteDao.findById(id).get();
@@ -73,14 +66,13 @@ public class ClienteServiceImpl implements IClienteService{
     }
 
     @Override
-    public ClienteDto signUp(SignUpRequestDto signUpRequestDto) {
+    public ClienteDto save(SignUpRequestDto signUpRequestDto) {
         String email = signUpRequestDto.email();
         Optional<Cliente> existeCliente = clienteDao.findByEmail(email);
         if(existeCliente.isPresent()){
             throw new DuplicateException(String.format("Ya existe un usuario con el email %s", email));
         }
         String hashedPassword = passwordEncoder.encode(signUpRequestDto.password());
-        System.out.println(hashedPassword);
         Cliente cliente = new Cliente(signUpRequestDto.nombre(),signUpRequestDto.apellido(),
                 signUpRequestDto.email(), null, hashedPassword, null);
         return new ClienteDto(clienteDao.save(cliente));

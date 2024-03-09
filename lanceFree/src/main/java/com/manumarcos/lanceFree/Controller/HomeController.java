@@ -22,7 +22,7 @@ public class HomeController {
 
     @PostMapping("/signup/cliente")
     public ResponseEntity<Void> signUp(@Valid @RequestBody SignUpRequestDto signUpRequestDto){
-        clienteService.save(new ClienteDto(signUpRequestDto.nombre(), signUpRequestDto.apellido(), signUpRequestDto.email(), signUpRequestDto.password()));
+        clienteService.save(signUpRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
