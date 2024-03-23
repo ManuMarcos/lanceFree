@@ -1,12 +1,26 @@
 package com.manumarcos.lanceFree.Model.Entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "cliente")
-public class Cliente extends Usuario{
+@NoArgsConstructor
+@Data
+@AllArgsConstructor
+public class Cliente extends PerfilUsuario{
+
+    @OneToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private Usuario usuario;
 
     private String horarioContacto;
 
@@ -16,59 +30,10 @@ public class Cliente extends Usuario{
     @OneToMany(mappedBy = "cliente")
     private List<Comentario> comentarios;
 
-    public Cliente(Long id, String nombre, String apellido, String email, String telefono, String contrasena, String horarioContacto, List<Contratacion> contrataciones, List<Comentario> comentarios) {
-        super(id, nombre, apellido, email, telefono, contrasena);
-        this.horarioContacto = horarioContacto;
-        this.contrataciones = contrataciones;
-        this.comentarios = comentarios;
-    }
-
-    public Cliente(Long id, String nombre, String apellido, String email, String telefono, String horarioContacto) {
-        super(id, nombre, apellido, email, telefono);
+    public Cliente(Usuario usuario, String horarioContacto) {
+        this.usuario = usuario;
         this.horarioContacto = horarioContacto;
     }
-
-    public Cliente(String nombre, String apellido, String email, String telefono, String contrasena, String horarioContacto) {
-        super(nombre, apellido, email, telefono, contrasena);
-        this.horarioContacto = horarioContacto;
-    }
-
-    public Cliente(String nombre, String apellido, String email, String telefono, String horarioContacto) {
-        super(nombre, apellido, email, telefono);
-        this.horarioContacto = horarioContacto;
-    }
-
-
-
-    public Cliente() {
-        super();
-    }
-
-    public String getHorarioContacto() {
-        return horarioContacto;
-    }
-
-    public void setHorarioContacto(String horarioContacto) {
-        this.horarioContacto = horarioContacto;
-    }
-
-    public List<Contratacion> getContrataciones() {
-        return contrataciones;
-    }
-
-    public void setContrataciones(List<Contratacion> contrataciones) {
-        this.contrataciones = contrataciones;
-    }
-
-    public List<Comentario> getComentarios() {
-        return comentarios;
-    }
-
-    public void setComentarios(List<Comentario> comentarios) {
-        this.comentarios = comentarios;
-    }
-
-
 
 
 }

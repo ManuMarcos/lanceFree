@@ -1,18 +1,26 @@
 package com.manumarcos.lanceFree.Service;
 
+import com.manumarcos.lanceFree.Exception.Exceptions.BadRequestException;
 import com.manumarcos.lanceFree.Exception.Exceptions.DuplicateException;
 import com.manumarcos.lanceFree.Exception.Exceptions.ItemNotFoundException;
 import com.manumarcos.lanceFree.Model.Dao.IClienteDao;
+import com.manumarcos.lanceFree.Model.Dao.IRoleDao;
+import com.manumarcos.lanceFree.Model.Dao.IUsuarioDao;
 import com.manumarcos.lanceFree.Model.Entity.Cliente;
+import com.manumarcos.lanceFree.Model.Entity.Usuario;
 import com.manumarcos.lanceFree.Service.Dto.ClienteDto;
 import com.manumarcos.lanceFree.Service.Dto.SignUpRequestDto;
+import com.manumarcos.lanceFree.Service.Dto.UsuarioDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ClienteServiceImpl implements IClienteService{
@@ -21,14 +29,23 @@ public class ClienteServiceImpl implements IClienteService{
     private IClienteDao clienteDao;
 
     @Autowired
+    private IUsuarioDao usuarioDao;
+    @Autowired
+    private IRoleDao roleDao;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public List<ClienteDto> findAll() {
         List<Cliente> clientes = clienteDao.findAll();
         List<ClienteDto> clienteDtos = new ArrayList<>();
         for(Cliente cliente : clientes){
-            clienteDtos.add(new ClienteDto(cliente));
+            clienteDtos.add(modelMapper.map(cliente, ClienteDto.class));
+
         }
         return clienteDtos;
     }
@@ -36,9 +53,38 @@ public class ClienteServiceImpl implements IClienteService{
     @Override
     public ClienteDto findById(Long id) {
         Cliente cliente = clienteDao.findById(id).orElseThrow(() -> new ItemNotFoundException(String.format("El cliente con id %d no existe",id)));
-        return new ClienteDto(cliente);
+        return modelMapper.map(cliente, ClienteDto.class);
     }
 
+    @Override
+    public ClienteDto save(ClienteDto clienteDto) {
+        this.validarDatos(clienteDto);
+        var usuario = modelMapper.map(clienteDto.getUsuario(), Usuario.class);
+        usuario.setRoles(Set.of(roleDao.findRoleByRoleAuthority("CLIENTE")));
+        usuario.setContrasena(passwordEncoder.encode(usuario.getPassword()));
+        Usuario usuarioCreado = usuarioDao.save(usuario);
+
+        var cliente = new Cliente(usuarioCreado, clienteDto.getHorarioContacto());
+        var clienteCreado = clienteDao.save(cliente);
+        return modelMapper.map(clienteCreado, ClienteDto.class);
+    }
+
+    /*
+    @Override
+    public ClienteDto save(SignUpRequestDto signUpRequestDto) {
+        String email = signUpRequestDto.email();
+        Optional<Cliente> existeCliente = clienteDao.findByEmail(email);
+        if(existeCliente.isPresent()){
+            throw new DuplicateException(String.format("Ya existe un usuario con el email %s", email));
+        }
+        String hashedPassword = passwordEncoder.encode(signUpRequestDto.password());
+        Cliente cliente = new Cliente(signUpRequestDto.nombre(),signUpRequestDto.apellido(),
+                signUpRequestDto.email(), null, hashedPassword, null);
+        return new ClienteDto(clienteDao.save(cliente));
+    }
+    */
+
+    /*
     @Override
     public ClienteDto update(Long id, ClienteDto clienteDto) {
         try{
@@ -54,6 +100,7 @@ public class ClienteServiceImpl implements IClienteService{
             throw new ItemNotFoundException(String.format("El cliente con id %d no existe", id));
         }
     }
+    */
 
     @Override
     public void deleteById(Long id) {
@@ -65,18 +112,16 @@ public class ClienteServiceImpl implements IClienteService{
         }
     }
 
-    @Override
-    public ClienteDto save(SignUpRequestDto signUpRequestDto) {
-        String email = signUpRequestDto.email();
-        Optional<Cliente> existeCliente = clienteDao.findByEmail(email);
-        if(existeCliente.isPresent()){
-            throw new DuplicateException(String.format("Ya existe un usuario con el email %s", email));
+
+
+
+    private void validarDatos(ClienteDto clienteDto){
+        if(usuarioDao.existsByEmail(clienteDto.getUsuario().getEmail())){
+            throw new BadRequestException("El email " + clienteDto.getUsuario().getEmail() + " ya se encuentra registrado");
         }
-        String hashedPassword = passwordEncoder.encode(signUpRequestDto.password());
-        Cliente cliente = new Cliente(signUpRequestDto.nombre(),signUpRequestDto.apellido(),
-                signUpRequestDto.email(), null, hashedPassword, null);
-        return new ClienteDto(clienteDao.save(cliente));
     }
+
+
 
     private Cliente findByEmail(String email){
         return clienteDao.findByEmail(email).orElseThrow(() -> new ItemNotFoundException("El cliente con email:" +  email + " no existe"));

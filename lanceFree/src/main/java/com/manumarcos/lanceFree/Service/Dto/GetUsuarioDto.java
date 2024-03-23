@@ -1,16 +1,17 @@
 package com.manumarcos.lanceFree.Service.Dto;
 
-import com.manumarcos.lanceFree.Model.Entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDto {
+public class GetUsuarioDto {
+
     private Long id;
     private String email;
-    private String contrasena;
-
+    private Date createdAt;
 }

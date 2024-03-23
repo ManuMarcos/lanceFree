@@ -1,14 +1,24 @@
 package com.manumarcos.lanceFree.Model.Entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "proveedor")
-public class Proveedor extends Usuario{
+@NoArgsConstructor
+@Data
+@AllArgsConstructor
+public class Proveedor extends PerfilUsuario{
     private String titulo;
+
+    @OneToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private Usuario usuario;
 
     @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Experiencia> experiencias;
@@ -16,43 +26,8 @@ public class Proveedor extends Usuario{
     @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Servicio> servicios;
 
-    public Proveedor(Long id, String nombre, String apellido, String email, String telefono, String contrasena, String titulo, List<Experiencia> experiencias, List<Servicio> servicios) {
-        super(id, nombre, apellido, email, telefono, contrasena);
+    public Proveedor(String titulo, Usuario usuario) {
         this.titulo = titulo;
-        this.experiencias = experiencias;
-        this.servicios = servicios;
-    }
-
-    public Proveedor(String nombre, String apellido, String email, String telefono, String titulo) {
-        super(nombre, apellido, email, telefono);
-        this.titulo = titulo;
-    }
-
-    public Proveedor() {
-
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public List<Experiencia> getExperiencias() {
-        return experiencias;
-    }
-
-    public void setExperiencias(List<Experiencia> experiencias) {
-        this.experiencias = experiencias;
-    }
-
-    public List<Servicio> getServicios() {
-        return servicios;
-    }
-
-    public void setServicios(List<Servicio> servicios) {
-        this.servicios = servicios;
+        this.usuario = usuario;
     }
 }

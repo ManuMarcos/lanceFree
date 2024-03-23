@@ -1,6 +1,5 @@
 package com.manumarcos.lanceFree.Service.Dto;
 
-import com.manumarcos.lanceFree.Model.Entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDto {
+public class RoleDto {
     private Long id;
-    private String email;
-    private String contrasena;
-
+    private String roleAuthority;
 }

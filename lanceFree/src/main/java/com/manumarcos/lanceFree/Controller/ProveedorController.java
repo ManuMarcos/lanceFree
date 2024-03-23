@@ -31,10 +31,13 @@ public class ProveedorController {
         return new ResponseEntity<>(proveedorService.save(proveedorDto), HttpStatus.CREATED);
     }
 
+    /*
     @PutMapping("/{proveedorId}")
     public ResponseEntity<ProveedorDto> updateProveedor(@PathVariable Long proveedorId, @RequestBody ProveedorDto proveedorDto){
         return ResponseEntity.ok(proveedorService.update(proveedorId, proveedorDto));
     }
+
+     */
 
     @DeleteMapping("/{proveedorId}")
     public ResponseEntity<String> deleteProveedor(@PathVariable Long proveedorId){

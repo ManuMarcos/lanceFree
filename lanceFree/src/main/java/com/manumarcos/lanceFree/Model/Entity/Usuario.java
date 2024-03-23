@@ -1,103 +1,91 @@
 package com.manumarcos.lanceFree.Model.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Set;
 
-@MappedSuperclass
-public abstract class Usuario {
+@NoArgsConstructor
+@Data
+@Entity(name = "usuario")
+public class Usuario implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String nombre;
-    private String apellido;
+    @NotNull(message = "No puede estar vacio")
+    @Email(message = "Email invalido")
     @Column(unique = true)
     private String email;
-    private String telefono;
+    @NotNull(message = "No puede estar vacio")
+    @Size(min = 6, message = "Debe contener un minimo de 6 caracteres")
     private String contrasena;
 
-    public Usuario(Long id, String nombre, String apellido, String email, String telefono, String contrasena) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
+    @OneToOne(mappedBy = "usuario")
+    private Cliente cliente;
+    @OneToOne(mappedBy = "usuario")
+    private Proveedor proveedor;
+
+    @CreatedDate
+    private Date createdAt;
+
+    @ManyToMany
+    @JoinTable(
+            name = "rol_usuario",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    private Set<Role> roles;
+
+    public Usuario(String email, String contrasena, Set<Role> roles) {
         this.email = email;
-        this.telefono = telefono;
         this.contrasena = contrasena;
+        this.roles = roles;
     }
 
-    public Usuario(Long id, String nombre, String apellido, String email, String telefono) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.telefono = telefono;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        var authorities = new ArrayList<GrantedAuthority>();
+        roles.forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleAuthority())) );
+        return authorities;
     }
 
-    public Usuario() {
+    @Override
+    public String getPassword() {
+        return this.contrasena;
     }
 
-
-
-    public Usuario(String nombre, String apellido, String email, String telefono, String contrasena) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.telefono = telefono;
-        this.contrasena = contrasena;
+    @Override
+    public String getUsername() {
+        return this.email;
     }
 
-    public Usuario(String nombre, String apellido, String email, String telefono) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.telefono = telefono;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-
-    public Long getId() {
-        return id;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

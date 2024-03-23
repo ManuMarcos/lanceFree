@@ -26,15 +26,17 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.findById(clienteId));
     }
 
-    /*@PostMapping
+    @PostMapping
     public ResponseEntity<ClienteDto> newCliente(@RequestBody ClienteDto clienteDto){
-        return new ResponseEntity<>(clienteService.(clienteDto), HttpStatus.CREATED);
-    }*/
+        return new ResponseEntity<>(clienteService.save(clienteDto), HttpStatus.CREATED);
+    }
 
+    /*
     @PutMapping("/{clienteId}")
     public ResponseEntity<ClienteDto> updateCliente(@PathVariable Long clienteId, @RequestBody ClienteDto clienteDto){
         return ResponseEntity.ok(clienteService.update(clienteId, clienteDto));
     }
+     */
 
     @DeleteMapping("/{clienteId}")
     public ResponseEntity<String> deleteCliente(@PathVariable Long clienteId){
