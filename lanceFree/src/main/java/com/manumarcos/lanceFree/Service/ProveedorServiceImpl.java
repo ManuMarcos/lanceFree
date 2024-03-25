@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -85,9 +86,9 @@ public class ProveedorServiceImpl implements IProveedorService {
 
     @Override
     public void deleteById(Long id) {
-        Proveedor proveedorToDelete = this.getProveedor(id);
-        if(proveedorToDelete != null){
-            //proveedorDao.deleteById(proveedorToDelete.getId());
+        Optional<Proveedor> proveedorToDelete = proveedorDao.findById(id);
+        if(proveedorToDelete.isPresent()){
+            usuarioDao.deleteById(proveedorToDelete.get().getUsuario().getId());
         }
     }
 

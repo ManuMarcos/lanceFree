@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 @Entity(name = "usuario")
+@EntityListeners(AuditingEntityListener.class)
 public class Usuario implements UserDetails {
 
     @Id
@@ -31,15 +35,15 @@ public class Usuario implements UserDetails {
     @Size(min = 6, message = "Debe contener un minimo de 6 caracteres")
     private String contrasena;
 
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne(mappedBy = "usuario", orphanRemoval = true)
     private Cliente cliente;
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne(mappedBy = "usuario", orphanRemoval = true)
     private Proveedor proveedor;
 
     @CreatedDate
     private Date createdAt;
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
             name = "rol_usuario",
             joinColumns = @JoinColumn(name = "usuario_id"),

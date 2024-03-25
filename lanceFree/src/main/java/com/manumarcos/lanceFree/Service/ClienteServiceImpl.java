@@ -1,7 +1,6 @@
 package com.manumarcos.lanceFree.Service;
 
 import com.manumarcos.lanceFree.Exception.Exceptions.BadRequestException;
-import com.manumarcos.lanceFree.Exception.Exceptions.DuplicateException;
 import com.manumarcos.lanceFree.Exception.Exceptions.ItemNotFoundException;
 import com.manumarcos.lanceFree.Model.Dao.IClienteDao;
 import com.manumarcos.lanceFree.Model.Dao.IRoleDao;
@@ -9,11 +8,8 @@ import com.manumarcos.lanceFree.Model.Dao.IUsuarioDao;
 import com.manumarcos.lanceFree.Model.Entity.Cliente;
 import com.manumarcos.lanceFree.Model.Entity.Usuario;
 import com.manumarcos.lanceFree.Service.Dto.ClienteDto;
-import com.manumarcos.lanceFree.Service.Dto.SignUpRequestDto;
-import com.manumarcos.lanceFree.Service.Dto.UsuarioDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -69,20 +65,7 @@ public class ClienteServiceImpl implements IClienteService{
         return modelMapper.map(clienteCreado, ClienteDto.class);
     }
 
-    /*
-    @Override
-    public ClienteDto save(SignUpRequestDto signUpRequestDto) {
-        String email = signUpRequestDto.email();
-        Optional<Cliente> existeCliente = clienteDao.findByEmail(email);
-        if(existeCliente.isPresent()){
-            throw new DuplicateException(String.format("Ya existe un usuario con el email %s", email));
-        }
-        String hashedPassword = passwordEncoder.encode(signUpRequestDto.password());
-        Cliente cliente = new Cliente(signUpRequestDto.nombre(),signUpRequestDto.apellido(),
-                signUpRequestDto.email(), null, hashedPassword, null);
-        return new ClienteDto(clienteDao.save(cliente));
-    }
-    */
+
 
     /*
     @Override
@@ -104,8 +87,10 @@ public class ClienteServiceImpl implements IClienteService{
 
     @Override
     public void deleteById(Long id) {
-        if(clienteDao.findById(id).isPresent()) {
-            clienteDao.deleteById(id);
+        Optional<Cliente> clienteToDelete = clienteDao.findById(id);
+        if(clienteToDelete.isPresent()) {
+            //clienteDao.deleteById(id);
+            usuarioDao.deleteById(clienteToDelete.get().getUsuario().getId());
         }
         else{
             throw new ItemNotFoundException(String.format("El cliente con id %d no existe",id));

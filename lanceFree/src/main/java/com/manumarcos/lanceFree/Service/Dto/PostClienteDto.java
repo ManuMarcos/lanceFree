@@ -4,16 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.Set;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetUsuarioDto {
+public class PostClienteDto {
 
     private Long id;
-    private String email;
-    private Date createdAt;
-    private Set<RoleDto> roles;
 }
