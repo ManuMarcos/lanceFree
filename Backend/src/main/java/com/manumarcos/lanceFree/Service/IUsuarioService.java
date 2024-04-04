@@ -16,4 +16,7 @@ public interface IUsuarioService {
     UsuarioDto crearAdmin(UsuarioDto usuarioDto);
     GetUsuarioDto findById(Long id);
     List<GetUsuarioDto> findAll();
+
+    List<GetUsuarioDto> findAllByRole(String role);
+
 }

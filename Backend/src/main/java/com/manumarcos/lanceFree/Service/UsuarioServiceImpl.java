@@ -9,6 +9,7 @@ import com.manumarcos.lanceFree.Service.Dto.GetUsuarioDto;
 import com.manumarcos.lanceFree.Service.Dto.RoleDto;
 import com.manumarcos.lanceFree.Service.Dto.UsuarioDto;
 import org.apache.catalina.mapper.Mapper;
+import org.modelmapper.Converters;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -64,6 +65,15 @@ public class UsuarioServiceImpl implements IUsuarioService{
         return usuarioDao.findAll().stream().map(usuario -> {
             modelMapper.map(usuario.getRoles(), RoleDto.class);
             return modelMapper.map(usuario, GetUsuarioDto.class);
+                }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GetUsuarioDto> findAllByRole(String role) {
+        return usuarioDao.findAllByRolesIsIn(Set.of(roleDao.findRoleByRoleAuthority(role))).stream()
+                .map(usuario -> {
+                    modelMapper.map(usuario.getRoles(), RoleDto.class);
+                    return modelMapper.map(usuario, GetUsuarioDto.class);
                 }).collect(Collectors.toList());
     }
 
