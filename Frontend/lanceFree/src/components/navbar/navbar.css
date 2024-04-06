@@ -1,0 +1,23 @@
+
+#logo{
+    width: 40%;
+    height: auto;
+}
+
+#navbar-buttons{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#navbar{
+    background-color: lightgray;
+}
+
+#login-btn{
+    color:black;
+    font-weight: 600;
+}
+
+a:hover{
+    color:yellow;
+}
