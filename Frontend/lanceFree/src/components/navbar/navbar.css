@@ -18,6 +18,28 @@
     font-weight: 600;
 }
 
-a:hover{
-    color:yellow;
+
+
+#logo{
+    width: 11.5rem;
+
+    margin-left: 0.5rem;
+}
+
+#header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.stack{
+    height: 2rem;
+    align-items: center;
+}
+
+#login-btn{
+    background-color: #76ABAE;
+    color: white;
 }
