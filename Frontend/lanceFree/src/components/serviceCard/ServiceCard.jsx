@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import "./serviceCard.css";
 
-export const ServiceCard = () => {
+export const ServiceCard = ({service}) => {
 
     const overFlowText = () => {
         console.log("overflow")
@@ -18,17 +18,15 @@ export const ServiceCard = () => {
         <CardMedia
           component="img"
           height="140"
-          image=""
-          src='https://www.cyberark.com/wp-content/uploads/2019/11/Developer.jpg'
+          src= {service.imgUrl}
           alt="green iguana"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Web developer
+            {service.title}
           </Typography>
           <Typography variant="body2" color="text.secondary" id="service-desc">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima consequatur ipsa sunt blanditiis. 
-            Error mollitia doloremque in enim, possimus praesentium odio ex facere quod dolores ea nihil aperiam esse accusamus.
+            {service.description}
           </Typography>
         </CardContent>
       </CardActionArea>
